@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Paiement form view -->
+        <record model="ir.ui.view" id="paiement_infos_form_view">
+            <field name="name">paiement.infos.form</field>
+            <field name="model">gc.paiement.info</field>
+            <field name="arch" type="xml">
+                <form string="Paiement Infos Form">
+                    <sheet>
+					<!--	<button name="Name of the button"
+							string="Showable label"
+							type="object"
+							confirm="Are you sure you want to do this?"
+						/> -->
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="member_reference"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Paiements">
+									<group>
+										<group>
+											<field name="is_this_month_paid"/>
+										</group>
+									</group>
+                                <field name="saving_paiements">
+                                    <tree string="Paiements" editable="bottom">
+                                   <!--     <field name="num"/> -->
+                                        <field name="paiement_type"/> 
+                                        <field name="activity_id" attrs="{'invisible':[('paiement_type','in',['insurance','other_paiement'])]}"/>
+                                        <field name="start_date" attrs="{'invisible':[('paiement_type','in',['insurance','other_paiement'])]}"/>
+                                        <field name="end_date" attrs="{'invisible':[('paiement_type','in',['insurance','other_paiement'])]}"/>
+                                        <field name="amount_id"/>
+                                        <field name="paiement_notes"/>
+                                    </tree>
+								</field> 
+							</page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+	
+        <!-- Paiement tree view -->
+
+        <record model="ir.ui.view" id="paiement_infos_tree_view">
+            <field name="name">paiement.infos.tree</field>
+            <field name="model">gc.paiement.info</field>
+            <field name="arch" type="xml">
+                <tree string="Paiement Tree">
+                    <field name="name"/>
+                    <field name="member_reference"/>
+                    <field name="is_this_month_paid"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="paiement_infos_list_action">
+            <field name="name">Paiement</field>
+            <field name="res_model">gc.paiement.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new Paiement
+                </p>
+            </field>
+        </record>
+		
+        <!-- Paiement Type view -->
+        <!--<record model="ir.ui.view" id="paiement_type_form_view">
+            <field name="name">paiement.type.form</field>
+            <field name="model">gc.paiement.type</field>
+            <field name="arch" type="xml">
+                <form string="Paiement Type Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="paiement_type"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+		
+        <record model="ir.actions.act_window" id="paiement_type_list_action">
+            <field name="name">Paiement Type</field>
+            <field name="res_model">gc.paiement.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new Paiement Type
+                </p>
+            </field>
+        </record>
+-->
+        <menuitem id="paiement_app_menu" name="Paiements"
+                  parent="main_gymcrm_app_menu"/>
+		
+        <menuitem id="paiement_app_app_menu" name="Paiements"
+                  parent="paiement_app_menu" action="paiement_infos_list_action"/>
+			
+		    </data>
+
+			
+</odoo>
+

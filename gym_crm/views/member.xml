@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <record id="member_custom_fields" model="ir.ui.view">
+      <field name="name">member.form.inherited</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='company_type']" position="replace">
+			<field name="member_type" widget="radio" options="{'horizontal': true}"/> 
+        </xpath>
+        <xpath expr="//field[@name='parent_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='vat']" position="after">
+			<field name="subscription_date" attrs="{'invisible': [('member_type', '=', 'prospect')]}"/>
+        </xpath>
+        <xpath expr="//field[@name='vat']" position="replace">
+			<field name="reference_internal"/> 
+        </xpath>
+        <xpath expr="//field[@name='ref']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='website']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='category_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='phone']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//page[1]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+                        <notebook position="inside">
+                            <page string="Subscription">
+                                <field name="activity_member">
+                                    <tree string="Activities" editable="bottom">
+                                        <field name="activity_name"/>
+                                        <field name="start_date_activity"/>
+                                        <field name="end_date_activity"/>
+                                        <field name="paid_statut"/>
+                                        <field name="activity_statut"/>
+                                    </tree>
+                                </field> 
+							</page>
+
+                            <page string="Emergency Contact" attrs="{'invisible': [('member_type', '=', 'prospect')]}">
+                                <group>
+                                  <group>
+                                    <field name="emergency_contact"/>
+                                    <field name="relationship"/>
+									<field name="email_contact" widget="email"/>
+									<field name="contact_phone_number" widget="phone"/>
+									<field name="medical_informations"/>
+								  </group>
+								</group>
+							</page>
+                       <!--     <page string="Paiements" attrs="{'invisible': [('member_type', '=', 'prospect')]}">
+                                <field name="paiement_saving">
+                                    <tree string="Paiements" editable="bottom">
+                                        <field name="paiement_type_id"/>
+                                        <field name="paiement_date"/>
+                                        <field name="paiement_period_start"/>
+                                        <field name="paiement_period_end"/>
+                                        <field name="amount_paid" widget="monetary" sum="Total"/>
+                                        <field name="paiement_note"/>
+                                    </tree>
+                                </field>
+                            </page> -->
+						</notebook>						
+      </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="member_list_action">
+            <field name="name">Members</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new member
+                </p>
+            </field>
+        </record>
+		
+
+
+        <menuitem id="main_gymcrm_app_menu" name="GymCRM"/>
+		
+        <menuitem id="members_app_menu" name="Members"
+                  parent="main_gymcrm_app_menu"/>
+		
+        <menuitem id="member_menu" name="Members"
+                  parent="members_app_menu" action="member_list_action"/>
+
+    </data>
+</odoo>

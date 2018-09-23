@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Activity form view -->
+        <record model="ir.ui.view" id="activity_form_view">
+            <field name="name">activity.form</field>
+            <field name="model">gc.activity</field>
+            <field name="arch" type="xml">
+                <form string="Activity Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+								<field name="prix" string="Subscription Fees" widget="monetary"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+	
+        <!-- Activity tree view -->
+
+        <record model="ir.ui.view" id="activity_tree_view">
+            <field name="name">activity.tree</field>
+            <field name="model">gc.activity</field>
+            <field name="arch" type="xml">
+                <tree string="Activity Tree">
+                    <field name="name"/>
+                    <field name="prix"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="activity_list_action">
+            <field name="name">Activities</field>
+            <field name="res_model">gc.activity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new Activity
+                </p>
+            </field>
+        </record>
+		
+		
+        <menuitem id="activity_app_menu" name="Activities"
+                  parent="main_gymcrm_app_menu"/>
+		
+        <menuitem id="activity_menu" name="Activities"
+                  parent="activity_app_menu" action="activity_list_action"/>
+		    </data>
+</odoo>
